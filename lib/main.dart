@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import './screens/chat_screen.dart';
+import './screens/auth_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,9 +18,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ChatterApp',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ChatScreen(),
+          primaryColor: Colors.pink,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.pink,
+            secondary: Colors.deepPurple,
+            onBackground: Colors.pink,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              // backgroundColor: Colors.pink,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          )),
+      home: const AuthScreen(),
     );
   }
 }
