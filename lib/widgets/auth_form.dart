@@ -30,9 +30,9 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState!.save();
       widget.submitFn(
-        _userEmail,
-        _userPassword,
-        _userName,
+        _userEmail.trim(),
+        _userPassword.trim(),
+        _userName.trim(),
         _isLogin,
       );
     }
@@ -100,9 +100,11 @@ class _AuthFormState extends State<AuthForm> {
                     child: Text(_isLogin ? 'login' : 'Signup'),
                   ),
                   TextButton(
-                      child: Text(_isLogin
-                          ? 'create new account'
-                          : 'I already have an acount'),
+                      child: Text(
+                        _isLogin
+                            ? 'create new account'
+                            : 'I already have an acount',
+                      ),
                       onPressed: () {
                         setState(() {
                           _isLogin = !_isLogin;
