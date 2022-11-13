@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm(
-    this.submitFn, {
+    this.submitFn,
+    this.isLoading, {
     super.key,
   });
+
+  final bool isLoading;
   final void Function(
     String email,
     String password,
@@ -54,7 +57,7 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     key: const ValueKey('email'),
                     validator: (value) {
-                      if (value!.isEmpty || value.contains('@')) {
+                      if (value!.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid emailaddress';
                       }
                       return null;
@@ -95,21 +98,24 @@ class _AuthFormState extends State<AuthForm> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  ElevatedButton(
-                    onPressed: _trySubmit,
-                    child: Text(_isLogin ? 'login' : 'Signup'),
-                  ),
-                  TextButton(
-                      child: Text(
-                        _isLogin
-                            ? 'create new account'
-                            : 'I already have an acount',
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isLogin = !_isLogin;
-                        });
-                      }),
+                  widget.isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: _trySubmit,
+                          child: Text(_isLogin ? 'login' : 'Signup'),
+                        ),
+                  if (!widget.isLoading)
+                    TextButton(
+                        child: Text(
+                          _isLogin
+                              ? 'create new account'
+                              : 'I already have an acount',
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isLogin = !_isLogin;
+                          });
+                        }),
                 ],
               ),
             ),
